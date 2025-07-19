@@ -1,8 +1,117 @@
-# Neptunize Podcast Generation Backend
+# Neptunize - AI Podcast Generation Platform
 
-A high-performance, scalable backend for AI-powered podcast generation using OpenAI and ElevenLabs.
+A full-stack AI-powered podcast generation platform with FastAPI backend and React frontend.
 
-## Features
+## 🏗️ Project Structure
+
+```
+neptunize/
+├── backend/              # FastAPI backend application
+│   ├── app/             # Main application code
+│   ├── alembic/         # Database migrations
+│   ├── requirements.txt # Python dependencies
+│   └── Dockerfile       # Backend container
+├── frontend/            # React + Vite frontend
+│   ├── src/            # React components and pages
+│   ├── public/         # Static assets
+│   └── package.json    # Node.js dependencies
+├── docs/               # Documentation
+├── generated_audio/    # Generated podcast files
+├── logs/              # Application logs
+└── docker-compose.yml # Multi-service orchestration
+```
+
+## 🚀 Quick Start
+
+### Using Docker (Recommended)
+```bash
+# Clone the repository
+git clone https://github.com/imanigma/neptunize.git
+cd neptunize
+
+# Start all services
+docker-compose up -d
+
+# Access the application
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:8000
+# API Docs: http://localhost:8000/docs
+```
+
+### Development Setup
+
+#### Backend
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python run.py
+```
+
+#### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## 📱 Features
+
+- **AI-Powered Script Generation**: Using OpenAI GPT models
+- **Text-to-Speech**: ElevenLabs integration for audio generation
+- **Interactive Chat Interface**: User-friendly podcast creation flow
+- **Multiple Formats**: Support for different podcast styles
+- **Mobile-First Design**: Responsive web application
+- **Real-time Audio Processing**: Fast podcast generation
+
+## 🔧 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# API Keys
+OPENAI_API_KEY=your_openai_api_key
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+
+# Database
+DATABASE_URL=sqlite:///./neptunize.db
+
+# Security
+SECRET_KEY=your_secret_key_here
+```
+
+## 📚 Documentation
+
+- [API Documentation](./docs/API_DOCS.md)
+- Backend API: http://localhost:8000/docs (when running)
+
+## 🤝 Development Workflow
+
+### For Backend Developers
+```bash
+git checkout -b backend/feature-name
+# Make changes to backend/ directory only
+git commit -m "backend: add new feature"
+git push origin backend/feature-name
+```
+
+### For Frontend Developers
+```bash
+git checkout -b frontend/feature-name
+# Make changes to frontend/ directory only
+git commit -m "frontend: add new component"
+git push origin frontend/feature-name
+```
+
+## 🏷️ Architecture
+
+- **Backend**: FastAPI + SQLAlchemy + PostgreSQL
+- **Frontend**: React + TypeScript + Vite + Tailwind CSS
+- **AI Services**: OpenAI GPT-4 + ElevenLabs TTS
+- **Deployment**: Docker + Docker Compose
+
+## 📋 Backend Features
 
 - **AI-Enhanced Scripts**: Uses OpenAI's GPT models to transform basic topics into engaging podcast narratives
 - **Professional Audio**: Leverages ElevenLabs TTS for natural-sounding podcast audio
@@ -11,43 +120,6 @@ A high-performance, scalable backend for AI-powered podcast generation using Ope
 - **Comprehensive Monitoring**: Built-in logging, health checks, and usage analytics
 - **Secure Authentication**: JWT-based user authentication and authorization
 - **Database Integration**: PostgreSQL with SQLAlchemy ORM for data persistence
-
-## Quick Start
-
-### Prerequisites
-
-- Python 3.8+
-- PostgreSQL
-- Redis (optional, for caching and rate limiting)
-- OpenAI API key
-- ElevenLabs API key
-
-### Installation
-
-1. **Clone and setup the project:**
-   ```bash
-   cd /Users/iman/Projects/backend_neptunize
-   python -m venv venv
-   source venv/bin/activate  # On macOS/Linux
-   pip install -r requirements.txt
-   ```
-
-2. **Environment Configuration:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys and database configuration
-   ```
-
-3. **Database Setup:**
-   ```bash
-   # Create database
-   createdb neptunize_db
-   
-   # Run migrations
-   alembic upgrade head
-   ```
-
-4. **Start the server:**
    ```bash
    python run.py
    ```

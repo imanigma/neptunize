@@ -140,5 +140,24 @@ logs/
 *.sqlite
 
 # Alembic
-alembic/versions/*.py
-!alembic/versions/__init__.py
+backend/alembic/versions/*.py
+!backend/alembic/versions/__init__.py
+
+# Node.js / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production
+*.log
+
+# Docker
+.dockerignore
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
