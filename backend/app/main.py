@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import FastAPI, Depends, HTTPException, status, BackgroundTasks
+from fastapi import FastAPI, Depends, HTTPException, status, BackgroundTasks, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -20,7 +20,8 @@ from app.models import Base
 from app.schemas import (
     PodcastRequestCreate, PodcastRequestResponse, PodcastRequestSummary,
     HealthCheck, UsageStats, ErrorResponse,
-    UserCreate, UserResponse, Token
+    UserCreate, UserResponse, Token,
+    ChatMessage, ChatResponse
 )
 from app.services import podcast_service, openai_service, elevenlabs_service
 from app.auth import (
@@ -176,8 +177,8 @@ async def register_user(user_data: UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/auth/login", response_model=Token)
 async def login_user(
-    username: str,
-    password: str,
+    username: str = Form(),
+    password: str = Form(),
     db: Session = Depends(get_db)
 ):
     """Authenticate user and return access token."""
@@ -194,6 +195,99 @@ async def login_user(
     logger.info("User logged in", user_id=user.id, username=user.username)
     
     return Token(access_token=access_token, token_type="bearer")
+
+
+# Chat endpoint for interactive podcast generation
+@app.post("/chat", response_model=ChatResponse)
+async def chat_with_ai(
+    message: ChatMessage,
+    current_user = Depends(get_current_user),
+):
+    """
+    Interactive chat for podcast topic refinement and suggestions.
+    """
+    try:
+        content = message.content.lower()
+        
+        # Analyze user message and provide contextual responses
+        if any(keyword in content for keyword in ["sustainable", "environment", "green", "eco"]):
+            return ChatResponse(
+                content="Great topic! Sustainable living is very popular right now. I can help you create engaging content about eco-friendly practices. Would you like me to:",
+                options=[
+                    "Generate episode outline",
+                    "Create full script", 
+                    "Suggest episode topics",
+                    "Define target audience"
+                ],
+                suggested_topic="Sustainable Living: Simple Changes for a Greener Future",
+                suggested_type="educational"
+            )
+        elif any(keyword in content for keyword in ["tech", "technology", "ai", "artificial intelligence"]):
+            return ChatResponse(
+                content="Technology topics are excellent for podcasts! AI and tech trends are really engaging for audiences. What specific aspect interests you most?",
+                options=[
+                    "AI in daily life",
+                    "Future of work",
+                    "Tech entrepreneurship", 
+                    "Cybersecurity basics"
+                ],
+                suggested_topic="The AI Revolution: How Technology is Changing Our Daily Lives",
+                suggested_type="technology"
+            )
+        elif any(keyword in content for keyword in ["business", "entrepreneur", "startup", "marketing"]):
+            return ChatResponse(
+                content="Business content performs really well! I can help you create content that provides real value to entrepreneurs and professionals.",
+                options=[
+                    "Startup success stories",
+                    "Marketing strategies",
+                    "Leadership lessons",
+                    "Financial planning"
+                ],
+                suggested_topic="From Idea to Success: Essential Lessons for New Entrepreneurs",
+                suggested_type="business"
+            )
+        elif any(keyword in content for keyword in ["health", "wellness", "fitness", "mental health"]):
+            return ChatResponse(
+                content="Health and wellness content is always in demand! I can help you create informative and inspiring content for your audience.",
+                options=[
+                    "Mental health awareness",
+                    "Fitness for beginners",
+                    "Nutrition myths",
+                    "Work-life balance"
+                ],
+                suggested_topic="Mind and Body Wellness: A Holistic Approach to Health",
+                suggested_type="health"
+            )
+        elif any(keyword in content for keyword in ["crime", "mystery", "investigation", "true crime"]):
+            return ChatResponse(
+                content="True crime is incredibly popular! I can help you create compelling investigative content with engaging storytelling.",
+                options=[
+                    "Historical mysteries",
+                    "Modern investigations",
+                    "Unsolved cases",
+                    "Criminal psychology"
+                ],
+                suggested_topic="Unsolved: The Case That Changed Everything",
+                suggested_type="crime"
+            )
+        else:
+            return ChatResponse(
+                content="I'd love to help you create an amazing podcast! Could you tell me more about what topic interests you? I can assist with many different types of content.",
+                options=[
+                    "Technology & Innovation",
+                    "Business & Entrepreneurship",
+                    "Health & Wellness",
+                    "Education & Learning",
+                    "Entertainment & Culture"
+                ]
+            )
+            
+    except Exception as e:
+        logger.error("Chat interaction failed", error=str(e), user_id=current_user.id)
+        return ChatResponse(
+            content="I'm sorry, I encountered an issue. Could you please try rephrasing your message?",
+            options=["Try again", "Contact support"]
+        )
 
 
 # Podcast generation endpoints

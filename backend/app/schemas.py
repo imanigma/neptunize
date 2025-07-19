@@ -8,6 +8,18 @@ from pydantic import BaseModel, Field, EmailStr
 from app.models import PodcastStatus, PodcastType
 
 
+# Chat schemas
+class ChatMessage(BaseModel):
+    content: str = Field(..., min_length=1, max_length=1000, description="Chat message content")
+
+
+class ChatResponse(BaseModel):
+    content: str
+    options: Optional[List[str]] = None
+    suggested_topic: Optional[str] = None
+    suggested_type: Optional[str] = None
+
+
 # User schemas
 class UserBase(BaseModel):
     email: EmailStr
