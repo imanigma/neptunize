@@ -1,5 +1,5 @@
 import { BookmarkIcon, MicIcon, SearchIcon, MoreHorizontalIcon, HomeIcon } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
@@ -130,53 +130,53 @@ export const Search = ({ onNavigate }: SearchProps): JSX.Element => {
   ];
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <div className="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black safe-area-top safe-area-bottom">
+      <div className="w-full max-w-sm mx-auto bg-gradient-to-b from-gray-900 to-black min-h-screen">
         {/* Mobile Container */}
-        <div className="flex flex-col h-[844px] relative">
+        <div className="flex flex-col min-h-screen relative">
           {/* Header */}
-          <header className="flex items-center justify-between px-4 py-4 border-b border-gray-200 bg-white">
-            <h1 className="text-xl font-medium text-gray-800">Search</h1>
-            <Button variant="ghost" size="icon" className="w-8 h-8">
-              <MoreHorizontalIcon className="w-4 h-4 text-gray-600" />
+          <header className="flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-lg border-b border-gray-800">
+            <h1 className="text-xl font-bold text-white">Search</h1>
+            <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-gray-800/50">
+              <MoreHorizontalIcon className="w-4 h-4 text-gray-400" />
             </Button>
           </header>
 
           {/* Search Input */}
-          <div className="p-4 bg-white border-b border-gray-100">
+          <div className="p-4 bg-black/30 backdrop-blur-lg border-b border-gray-800">
             <div className="relative">
               <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 bg-gray-50 border-gray-300 rounded-lg text-base placeholder:text-gray-400"
+                className="pl-10 h-12 bg-gray-800/50 border-gray-600 rounded-xl text-white placeholder:text-gray-400 focus:border-green-400 focus:ring-green-400/30"
                 placeholder="Search podcasts, creators, topics..."
               />
             </div>
           </div>
 
           {/* Content - Scrollable */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black">
             {/* Trending Now Section */}
             <div className="p-4">
-              <h2 className="text-lg font-medium text-gray-800 mb-4">Trending Now</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">Trending Now</h2>
               <div className="space-y-3">
                 {trendingPodcasts.map((podcast, index) => (
                   <Card 
                     key={index} 
-                    className="bg-gray-50 rounded-lg p-3 border-0 cursor-pointer hover:bg-gray-100 transition-colors"
+                    className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700 rounded-xl p-3 cursor-pointer hover:from-gray-700/50 hover:to-gray-800/50 transition-all duration-200 transform hover:scale-[1.02]"
                     onClick={() => handlePodcastClick(podcast)}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center">
-                        <MicIcon className="w-4 h-4 text-white" />
+                      <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl flex items-center justify-center">
+                        <MicIcon className="w-4 h-4 text-black" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-medium text-gray-800 text-base">{podcast.title}</h3>
-                        <p className="text-sm text-gray-600">{podcast.category} • {podcast.plays}</p>
+                        <h3 className="font-semibold text-white text-base">{podcast.title}</h3>
+                        <p className="text-sm text-gray-400">{podcast.category} • {podcast.plays}</p>
                       </div>
-                      <Button variant="ghost" size="icon" className="w-8 h-8">
-                        <MoreHorizontalIcon className="w-3 h-4 text-gray-600" />
+                      <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-gray-700/50">
+                        <MoreHorizontalIcon className="w-3 h-4 text-gray-400" />
                       </Button>
                     </div>
                   </Card>
@@ -186,12 +186,12 @@ export const Search = ({ onNavigate }: SearchProps): JSX.Element => {
 
             {/* Browse Categories Section */}
             <div className="p-4">
-              <h2 className="text-lg font-medium text-gray-800 mb-4">Browse Categories</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">Browse Categories</h2>
               <div className="grid grid-cols-2 gap-3">
                 {categories.map((category, index) => (
-                  <Card key={index} className="bg-gray-100 rounded-lg p-4 border-0 h-20 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+                  <Card key={index} className="bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-lg border border-gray-700 rounded-xl p-4 h-20 flex flex-col items-center justify-center cursor-pointer hover:from-gray-700/40 hover:to-gray-800/40 transition-all duration-200 transform hover:scale-105">
                     <div className="text-2xl mb-1">{category.icon}</div>
-                    <span className="text-base font-medium text-gray-800">{category.name}</span>
+                    <span className="text-base font-medium text-white">{category.name}</span>
                   </Card>
                 ))}
               </div>
@@ -199,23 +199,23 @@ export const Search = ({ onNavigate }: SearchProps): JSX.Element => {
 
             {/* Podcasts from Your Network Section */}
             <div className="p-4">
-              <h2 className="text-lg font-medium text-gray-800 mb-4">From Your Network</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">From Your Network</h2>
               <div className="space-y-3">
                 {networkPodcasts.map((podcast, index) => (
                   <Card 
                     key={index} 
-                    className="border border-gray-200 rounded-lg p-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                    className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-gray-700 rounded-xl p-3 cursor-pointer hover:from-gray-700/30 hover:to-gray-800/30 transition-all duration-200 transform hover:scale-[1.01]"
                     onClick={() => handlePodcastClick(podcast)}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center">
-                        <MicIcon className="w-4 h-4 text-white" />
+                      <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center">
+                        <MicIcon className="w-4 h-4 text-black" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-medium text-gray-800 text-base">{podcast.title}</h3>
+                        <h3 className="font-semibold text-white text-base">{podcast.title}</h3>
                         <div className="flex items-center gap-1 mb-1">
-                          <span className="text-sm text-gray-600">by {podcast.creator}</span>
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                          <span className="text-sm text-gray-400">by {podcast.creator}</span>
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-gradient-to-r from-green-400/20 to-blue-500/20 text-green-400 border border-green-400/30">
                             {podcast.relationship === "following" ? "Following" : 
                              podcast.relationship === "follower" ? "Follower" : "Mutual"}
                           </span>
@@ -228,8 +228,8 @@ export const Search = ({ onNavigate }: SearchProps): JSX.Element => {
                           <span>{podcast.listens} listens</span>
                         </div>
                       </div>
-                      <Button variant="ghost" size="icon" className="w-8 h-8">
-                        <MoreHorizontalIcon className="w-3 h-4 text-gray-600" />
+                      <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-gray-700/50">
+                        <MoreHorizontalIcon className="w-3 h-4 text-gray-400" />
                       </Button>
                     </div>
                   </Card>
@@ -239,27 +239,27 @@ export const Search = ({ onNavigate }: SearchProps): JSX.Element => {
 
             {/* Popular Creators Section */}
             <div className="p-4 pb-6">
-              <h2 className="text-lg font-medium text-gray-800 mb-4">Popular Creators</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">Popular Creators</h2>
               <div className="space-y-3">
                 {creators.map((creator, index) => (
-                  <Card key={index} className="border border-gray-200 rounded-lg p-3">
+                  <Card key={index} className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-gray-700 rounded-xl p-3">
                     <div className="flex items-center gap-3">
                       <Avatar className="w-12 h-12">
-                        <AvatarFallback className="bg-gray-300 text-gray-600 text-sm">
+                        <AvatarFallback className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-sm font-semibold">
                           {creator.name.split(' ').map(n => n[0]).join('')}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
-                        <h3 className="font-medium text-gray-800 text-base">{creator.name}</h3>
-                        <p className="text-sm text-gray-600">{creator.stats}</p>
+                        <h3 className="font-semibold text-white text-base">{creator.name}</h3>
+                        <p className="text-sm text-gray-400">{creator.stats}</p>
                       </div>
                       <Button
                         variant={creator.following ? "outline" : "default"}
                         size="sm"
-                        className={`px-4 py-2 text-sm ${
+                        className={`px-4 py-2 text-sm transition-all duration-200 ${
                           creator.following 
-                            ? "border-gray-300 text-gray-700 hover:bg-gray-50" 
-                            : "bg-gray-800 text-white hover:bg-gray-700"
+                            ? "border-gray-600 text-gray-300 bg-transparent hover:bg-gray-800/50 hover:text-white" 
+                            : "bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-medium"
                         }`}
                       >
                         {creator.following ? "Following" : "Follow"}
@@ -272,19 +272,27 @@ export const Search = ({ onNavigate }: SearchProps): JSX.Element => {
           </div>
 
           {/* Bottom Navigation */}
-          <div className="bg-white border-t border-gray-200 px-4 py-2">
+          <div className="bg-black/70 backdrop-blur-lg border-t border-gray-800 px-4 py-2 safe-area-bottom">
             <div className="flex justify-around items-center">
               {navItems.map((item, index) => (
                 <button
                   key={index}
                   onClick={() => onNavigate(item.screen)}
-                  className="flex flex-col items-center justify-center py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex flex-col items-center justify-center py-3 px-3 rounded-xl hover:bg-gray-800/50 transition-all duration-200"
                 >
-                  <div className={`mb-1 ${item.active ? "text-black" : "text-gray-400"}`}>
+                  <div className={`mb-1 transition-all duration-200 ${
+                    item.active 
+                      ? "text-green-400 transform scale-110" 
+                      : "text-gray-400 hover:text-gray-300"
+                  }`}>
                     {item.icon}
                   </div>
                   <span
-                    className={`text-xs ${item.active ? "text-black font-medium" : "text-gray-400"}`}
+                    className={`text-xs transition-all duration-200 ${
+                      item.active 
+                        ? "text-green-400 font-semibold" 
+                        : "text-gray-400 hover:text-gray-300"
+                    }`}
                   >
                     {item.label}
                   </span>

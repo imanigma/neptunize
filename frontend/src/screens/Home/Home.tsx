@@ -1,5 +1,5 @@
 import { BookmarkIcon, MicIcon, SearchIcon, MoreHorizontalIcon, HomeIcon, UserPlusIcon, UsersIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
@@ -188,51 +188,51 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
   ];
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <div className="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black safe-area-top safe-area-bottom">
+      <div className="w-full max-w-sm mx-auto bg-gradient-to-b from-gray-900 to-black min-h-screen">
         {/* Mobile Container */}
-        <div className="flex flex-col h-[844px] relative">
+        <div className="flex flex-col min-h-screen relative">
           {/* Header */}
-          <header className="flex items-center justify-between px-4 py-4 border-b border-gray-200 bg-white">
-            <h1 className="text-xl font-medium text-gray-800">Home</h1>
-            <Button variant="ghost" size="icon" className="w-8 h-8">
-              <MoreHorizontalIcon className="w-4 h-4 text-gray-600" />
+          <header className="flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-lg border-b border-gray-800">
+            <h1 className="text-xl font-bold text-white">Home</h1>
+            <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-gray-800/50">
+              <MoreHorizontalIcon className="w-4 h-4 text-gray-400" />
             </Button>
           </header>
 
           {/* User Profile Section */}
-          <div className="p-4 bg-white border-b border-gray-100">
+          <div className="p-4 bg-black/30 backdrop-blur-lg border-b border-gray-800">
             <div className="flex items-center gap-4 mb-4">
               <Avatar className="w-16 h-16">
-                <AvatarFallback className="bg-gray-800 text-white text-lg font-medium">
+                <AvatarFallback className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-lg font-semibold">
                   U
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <h2 className="text-lg font-medium text-gray-800">Your Profile</h2>
-                <p className="text-sm text-gray-600">@yourpodcast</p>
+                <h2 className="text-lg font-semibold text-white">Your Profile</h2>
+                <p className="text-sm text-gray-400">@yourpodcast</p>
               </div>
             </div>
             
             {/* Stats */}
-            <div className="flex justify-around py-3 bg-gray-50 rounded-lg">
+            <div className="flex justify-around py-3 bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-xl border border-gray-700">
               <div className="text-center">
-                <div className="text-lg font-semibold text-gray-800">{userStats.podcasts}</div>
-                <div className="text-xs text-gray-600">Podcasts</div>
+                <div className="text-lg font-semibold text-white">{userStats.podcasts}</div>
+                <div className="text-xs text-gray-400">Podcasts</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-semibold text-gray-800">{userStats.followers.toLocaleString()}</div>
-                <div className="text-xs text-gray-600">Followers</div>
+                <div className="text-lg font-semibold text-white">{userStats.followers.toLocaleString()}</div>
+                <div className="text-xs text-gray-400">Followers</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-semibold text-gray-800">{userStats.following}</div>
-                <div className="text-xs text-gray-600">Following</div>
+                <div className="text-lg font-semibold text-white">{userStats.following}</div>
+                <div className="text-xs text-gray-400">Following</div>
               </div>
             </div>
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex border-b border-gray-200 bg-white">
+          <div className="flex border-b border-gray-800 bg-black/30 backdrop-blur-lg">
             {[
               { id: "followers", label: "Followers" },
               { id: "following", label: "Following" },
@@ -242,10 +242,10 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${
+                className={`flex-1 py-3 text-sm font-medium border-b-2 transition-all duration-200 ${
                   activeTab === tab.id
-                    ? "border-black text-black"
-                    : "border-transparent text-gray-500 hover:text-gray-700"
+                    ? "border-green-400 text-green-400"
+                    : "border-transparent text-gray-400 hover:text-gray-300"
                 }`}
               >
                 {tab.label}
@@ -254,25 +254,25 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
           </div>
 
           {/* Content - Scrollable */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black">
             {activeTab === "followers" && (
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-800">Your Followers</h3>
-                  <span className="text-sm text-gray-500">{userStats.followers.toLocaleString()}</span>
+                  <h3 className="text-lg font-semibold text-white">Your Followers</h3>
+                  <span className="text-sm text-gray-400">{userStats.followers.toLocaleString()}</span>
                 </div>
                 <div className="space-y-3">
                   {followers.map((follower, index) => (
-                    <Card key={index} className="border border-gray-200 rounded-lg p-3">
+                    <Card key={index} className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-gray-700 rounded-xl p-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="w-12 h-12">
-                          <AvatarFallback className="bg-gray-300 text-gray-600 text-sm">
+                          <AvatarFallback className="bg-gradient-to-r from-purple-400 to-pink-500 text-black text-sm font-semibold">
                             {follower.avatar}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
-                          <h4 className="font-medium text-gray-800 text-base">{follower.name}</h4>
-                          <p className="text-sm text-gray-600">{follower.username}</p>
+                          <h4 className="font-semibold text-white text-base">{follower.name}</h4>
+                          <p className="text-sm text-gray-400">{follower.username}</p>
                           {follower.mutualFollowers > 0 && (
                             <p className="text-xs text-gray-500">
                               {follower.mutualFollowers} mutual followers
@@ -282,10 +282,10 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
                         <Button
                           variant={follower.isFollowingBack ? "outline" : "default"}
                           size="sm"
-                          className={`px-4 py-2 text-sm ${
+                          className={`px-4 py-2 text-sm transition-all duration-200 ${
                             follower.isFollowingBack 
-                              ? "border-gray-300 text-gray-700 hover:bg-gray-50" 
-                              : "bg-gray-800 text-white hover:bg-gray-700"
+                              ? "border-gray-600 text-gray-300 bg-transparent hover:bg-gray-800/50 hover:text-white" 
+                              : "bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-medium"
                           }`}
                         >
                           {follower.isFollowingBack ? "Following" : "Follow Back"}
@@ -300,34 +300,34 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
             {activeTab === "following" && (
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-800">Following</h3>
-                  <span className="text-sm text-gray-500">{userStats.following}</span>
+                  <h3 className="text-lg font-semibold text-white">Following</h3>
+                  <span className="text-sm text-gray-400">{userStats.following}</span>
                 </div>
                 <div className="space-y-3">
                   {following.map((user, index) => (
-                    <Card key={index} className="border border-gray-200 rounded-lg p-3">
+                    <Card key={index} className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-gray-700 rounded-xl p-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="w-12 h-12">
-                          <AvatarFallback className="bg-gray-300 text-gray-600 text-sm">
+                          <AvatarFallback className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-sm font-semibold">
                             {user.avatar}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
                           <div className="flex items-center gap-1">
-                            <h4 className="font-medium text-gray-800 text-base">{user.name}</h4>
+                            <h4 className="font-semibold text-white text-base">{user.name}</h4>
                             {user.verified && (
-                              <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                                <span className="text-white text-xs">✓</span>
+                              <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                                <span className="text-black text-xs">✓</span>
                               </div>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600">{user.username}</p>
+                          <p className="text-sm text-gray-400">{user.username}</p>
                           <p className="text-xs text-gray-500">{user.category}</p>
                         </div>
                         <Button
                           variant="outline"
                           size="sm"
-                          className="px-4 py-2 text-sm border-gray-300 text-gray-700 hover:bg-gray-50"
+                          className="px-4 py-2 text-sm border-gray-600 text-gray-300 bg-transparent hover:bg-gray-800/50 hover:text-white transition-all duration-200"
                         >
                           Following
                         </Button>
@@ -341,28 +341,28 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
             {activeTab === "suggested" && (
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-800">Suggested for You</h3>
+                  <h3 className="text-lg font-semibold text-white">Suggested for You</h3>
                   <UsersIcon className="w-5 h-5 text-gray-400" />
                 </div>
                 <div className="space-y-3 mb-6">
                   {suggestedUsers.map((user, index) => (
-                    <Card key={index} className="border border-gray-200 rounded-lg p-3">
+                    <Card key={index} className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-gray-700 rounded-xl p-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="w-12 h-12">
-                          <AvatarFallback className="bg-gray-300 text-gray-600 text-sm">
+                          <AvatarFallback className="bg-gradient-to-r from-orange-400 to-red-500 text-black text-sm font-semibold">
                             {user.avatar}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
-                          <h4 className="font-medium text-gray-800 text-base">{user.name}</h4>
-                          <p className="text-sm text-gray-600">{user.username}</p>
+                          <h4 className="font-semibold text-white text-base">{user.name}</h4>
+                          <p className="text-sm text-gray-400">{user.username}</p>
                           <p className="text-xs text-gray-500">
                             {user.category} • {user.mutualFollowers} mutual followers
                           </p>
                         </div>
                         <Button
                           size="sm"
-                          className="px-4 py-2 text-sm bg-gray-800 text-white hover:bg-gray-700"
+                          className="px-4 py-2 text-sm bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-medium transition-all duration-200 transform hover:scale-105"
                         >
                           <UserPlusIcon className="w-3 h-3 mr-1" />
                           Follow
@@ -373,17 +373,17 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
                 </div>
 
                 {/* Discover More Section */}
-                <Card className="bg-gray-50 rounded-lg p-4 border-0">
+                <Card className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700 rounded-xl p-4">
                   <div className="text-center">
-                    <UsersIcon className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                    <h4 className="font-medium text-gray-800 mb-1">Discover More Creators</h4>
-                    <p className="text-sm text-gray-600 mb-3">
+                    <UsersIcon className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                    <h4 className="font-semibold text-white mb-1">Discover More Creators</h4>
+                    <p className="text-sm text-gray-400 mb-3">
                       Find podcast creators based on your interests
                     </p>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-gray-300 text-gray-700 hover:bg-white"
+                      className="border-gray-600 text-gray-300 bg-transparent hover:bg-gray-800/50 hover:text-white transition-all duration-200"
                     >
                       Browse All
                     </Button>
@@ -395,30 +395,30 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
             {activeTab === "engagement" && (
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-800">Episode Engagement</h3>
-                  <span className="text-sm text-gray-500">This Week</span>
+                  <h3 className="text-lg font-semibold text-white">Episode Engagement</h3>
+                  <span className="text-sm text-gray-400">This Week</span>
                 </div>
                 
                 {/* Engagement Cards */}
                 <div className="space-y-6">
                   {podcastEngagement.map((episode, index) => (
-                    <Card key={index} className="border border-gray-200 rounded-lg p-4">
+                    <Card key={index} className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-lg border border-gray-700 rounded-xl p-4">
                       {/* Episode Header */}
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center">
-                          <MicIcon className="w-4 h-4 text-white" />
+                        <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl flex items-center justify-center">
+                          <MicIcon className="w-4 h-4 text-black" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-medium text-gray-800 text-base">{episode.episodeTitle}</h4>
-                          <p className="text-sm text-gray-600">{episode.episodeNumber} • {episode.timeAgo}</p>
+                          <h4 className="font-semibold text-white text-base">{episode.episodeTitle}</h4>
+                          <p className="text-sm text-gray-400">{episode.episodeNumber} • {episode.timeAgo}</p>
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-gray-500">
+                        <div className="flex items-center gap-3 text-sm text-gray-400">
                           <div className="flex items-center gap-1">
-                            <HeartIcon className="w-4 h-4" />
+                            <HeartIcon className="w-4 h-4 text-red-400" />
                             <span>{episode.totalLikes}</span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <MessageCircleIcon className="w-4 h-4" />
+                            <MessageCircleIcon className="w-4 h-4 text-blue-400" />
                             <span>{episode.totalComments}</span>
                           </div>
                         </div>
@@ -429,19 +429,19 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
                         <div className="flex items-center gap-2 mb-2">
                           <div className="flex -space-x-2">
                             {episode.likes.slice(0, 3).map((user, userIndex) => (
-                              <Avatar key={userIndex} className="w-6 h-6 border-2 border-white">
-                                <AvatarFallback className="bg-gray-300 text-gray-600 text-xs">
+                              <Avatar key={userIndex} className="w-6 h-6 border-2 border-gray-800">
+                                <AvatarFallback className="bg-gradient-to-r from-purple-400 to-pink-500 text-black text-xs font-semibold">
                                   {user.avatar}
                                 </AvatarFallback>
                               </Avatar>
                             ))}
                             {episode.totalLikes > 3 && (
-                              <div className="w-6 h-6 bg-gray-200 rounded-full border-2 border-white flex items-center justify-center">
-                                <span className="text-xs text-gray-600">+{episode.totalLikes - 3}</span>
+                              <div className="w-6 h-6 bg-gray-700 rounded-full border-2 border-gray-800 flex items-center justify-center">
+                                <span className="text-xs text-gray-300">+{episode.totalLikes - 3}</span>
                               </div>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-400">
                             {episode.likes.length === 1 
                               ? `${episode.likes[0].name} liked this`
                               : episode.likes.length === 2
@@ -457,24 +457,24 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
                         {episode.comments.map((comment, commentIndex) => (
                           <div key={commentIndex} className="flex gap-3">
                             <Avatar className="w-8 h-8">
-                              <AvatarFallback className="bg-gray-300 text-gray-600 text-xs">
+                              <AvatarFallback className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-xs font-semibold">
                                 {comment.avatar}
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
-                              <div className="bg-gray-50 rounded-lg p-3">
+                              <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-3 border border-gray-700">
                                 <div className="flex items-center gap-2 mb-1">
-                                  <span className="font-medium text-gray-800 text-sm">{comment.name}</span>
+                                  <span className="font-semibold text-white text-sm">{comment.name}</span>
                                   <span className="text-xs text-gray-500">{comment.timeAgo}</span>
                                 </div>
-                                <p className="text-sm text-gray-700">{comment.comment}</p>
+                                <p className="text-sm text-gray-300">{comment.comment}</p>
                               </div>
                             </div>
                           </div>
                         ))}
                         
                         {episode.totalComments > episode.comments.length && (
-                          <Button variant="ghost" className="text-sm text-gray-500 hover:text-gray-700 p-0 h-auto">
+                          <Button variant="ghost" className="text-sm text-gray-400 hover:text-gray-300 p-0 h-auto">
                             View {episode.totalComments - episode.comments.length} more comments
                           </Button>
                         )}
@@ -484,22 +484,22 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
                 </div>
 
                 {/* Weekly Engagement Summary */}
-                <Card className="bg-gray-50 rounded-lg p-4 border-0 mt-6">
+                <Card className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700 rounded-xl p-4 mt-6">
                   <div className="text-center">
-                    <h4 className="font-medium text-gray-800 mb-1">This Week's Engagement</h4>
-                    <p className="text-sm text-gray-600 mb-3">Your podcasts are growing!</p>
+                    <h4 className="font-semibold text-white mb-1">This Week's Engagement</h4>
+                    <p className="text-sm text-gray-400 mb-3">Your podcasts are growing!</p>
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div>
-                        <div className="text-lg font-semibold text-gray-800">42</div>
-                        <div className="text-xs text-gray-600">New Likes</div>
+                        <div className="text-lg font-semibold text-green-400">42</div>
+                        <div className="text-xs text-gray-500">New Likes</div>
                       </div>
                       <div>
-                        <div className="text-lg font-semibold text-gray-800">13</div>
-                        <div className="text-xs text-gray-600">Comments</div>
+                        <div className="text-lg font-semibold text-blue-400">13</div>
+                        <div className="text-xs text-gray-500">Comments</div>
                       </div>
                       <div>
-                        <div className="text-lg font-semibold text-gray-800">156</div>
-                        <div className="text-xs text-gray-600">New Plays</div>
+                        <div className="text-lg font-semibold text-purple-400">156</div>
+                        <div className="text-xs text-gray-500">New Plays</div>
                       </div>
                     </div>
                   </div>
@@ -509,19 +509,27 @@ export const Home = ({ onNavigate }: HomeProps): JSX.Element => {
           </div>
 
           {/* Bottom Navigation */}
-          <div className="bg-white border-t border-gray-200 px-4 py-2">
+          <div className="bg-black/70 backdrop-blur-lg border-t border-gray-800 px-4 py-2 safe-area-bottom">
             <div className="flex justify-around items-center">
               {navItems.map((item, index) => (
                 <button
                   key={index}
                   onClick={() => onNavigate(item.screen)}
-                  className="flex flex-col items-center justify-center py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex flex-col items-center justify-center py-3 px-3 rounded-xl hover:bg-gray-800/50 transition-all duration-200"
                 >
-                  <div className={`mb-1 ${item.active ? "text-black" : "text-gray-400"}`}>
+                  <div className={`mb-1 transition-all duration-200 ${
+                    item.active 
+                      ? "text-green-400 transform scale-110" 
+                      : "text-gray-400 hover:text-gray-300"
+                  }`}>
                     {item.icon}
                   </div>
                   <span
-                    className={`text-xs ${item.active ? "text-black font-medium" : "text-gray-400"}`}
+                    className={`text-xs transition-all duration-200 ${
+                      item.active 
+                        ? "text-green-400 font-semibold" 
+                        : "text-gray-400 hover:text-gray-300"
+                    }`}
                   >
                     {item.label}
                   </span>

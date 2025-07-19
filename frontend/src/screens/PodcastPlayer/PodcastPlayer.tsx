@@ -1,22 +1,26 @@
 import { ArrowLeftIcon, MoreHorizontalIcon, PlayIcon, PauseIcon, SkipBackIcon, SkipForwardIcon, ListIcon, HeartIcon, ShareIcon, VolumeXIcon, Volume2Icon } from "lucide-react";
 import React, { useState } from "react";
-import { Button } from "../../components/ui/button";
 
 interface PodcastPlayerProps {
   onNavigate: (screen: string, podcastData?: any) => void;
   podcastData?: {
+    id?: number;
     title: string;
-    podcast: string;
-    episode: string;
-    duration: string;
-    currentTime: string;
-    progress: number;
+    original_topic?: string;
+    podcast?: string;
+    episode?: string;
+    duration?: string;
+    currentTime?: string;
+    progress?: number;
+    audioUrl?: string;
+    audio_file_url?: string;
+    script?: string;
+    enhanced_script?: string;
   };
 }
 
 export const PodcastPlayer = ({ onNavigate, podcastData }: PodcastPlayerProps): JSX.Element => {
   const [isPlaying, setIsPlaying] = useState(true);
-  const [volume, setVolume] = useState(75);
   const [isMuted, setIsMuted] = useState(false);
 
   // Default podcast data if none provided
@@ -29,6 +33,10 @@ export const PodcastPlayer = ({ onNavigate, podcastData }: PodcastPlayerProps): 
     progress: 28, // 28% progress
   };
 
+  // Use the correct audio URL from the podcast data
+  const audioUrl = podcastData?.audioUrl || podcastData?.audio_file_url;
+  const podcastTitle = podcastData?.title || podcastData?.original_topic || podcast.title;
+
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
@@ -37,163 +45,153 @@ export const PodcastPlayer = ({ onNavigate, podcastData }: PodcastPlayerProps): 
     setIsMuted(!isMuted);
   };
 
-  const handleGoBack = () => {
-    // Go back to the previous screen (could be search or library)
-    onNavigate("search");
-  };
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <div className="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
-        {/* Mobile Container */}
-        <div className="flex flex-col h-[844px] relative">
-          {/* Header */}
-          <header className="flex items-center justify-between px-4 py-4 border-b border-gray-200 bg-white">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="w-9 h-9"
-              onClick={handleGoBack}
-            >
-              <ArrowLeftIcon className="w-[18px] h-[18px] text-gray-600" />
-            </Button>
-            <Button variant="ghost" size="icon" className="w-8 h-8">
-              <MoreHorizontalIcon className="w-4 h-4 text-gray-600" />
-            </Button>
-          </header>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white safe-area-top safe-area-bottom">
+      <div className="max-w-sm mx-auto min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 bg-black/30 backdrop-blur-lg">
+          <button 
+            onClick={() => onNavigate("library")}
+            className="p-2 rounded-full hover:bg-gray-800/50 transition-colors"
+          >
+            <ArrowLeftIcon className="w-6 h-6 text-white" />
+          </button>
+          <h1 className="text-sm font-medium text-gray-300 uppercase tracking-wider">Now Playing</h1>
+          <button className="p-2 rounded-full hover:bg-gray-800/50 transition-colors">
+            <MoreHorizontalIcon className="w-6 h-6 text-white" />
+          </button>
+        </div>
 
-          {/* Main Content */}
-          <main className="flex-1 px-6 py-6 flex flex-col">
-            {/* Album Art */}
-            <div className="flex justify-center mb-8">
-              <div className="w-72 h-72 bg-gray-300 rounded-xl shadow-lg flex items-center justify-center">
-                <span className="text-white text-lg font-medium">Podcast Cover Art</span>
+        {/* Album Art */}
+        <div className="flex justify-center px-8 py-8">
+          <div className="relative">
+            <div className="w-80 h-80 rounded-3xl bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-1 shadow-2xl shadow-green-500/20">
+              <div className="w-full h-full rounded-3xl bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center relative overflow-hidden">
+                {/* Podcast Logo/Art */}
+                <div className="text-center p-8">
+                  <div className="text-4xl font-black text-black mb-2 tracking-tighter">
+                    NEPTUNIZE
+                  </div>
+                  <div className="text-lg font-bold text-black/80">
+                    AI PODCAST
+                  </div>
+                </div>
+                
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/10 rounded-3xl"></div>
               </div>
             </div>
+            
+            {/* Floating shadow/glow */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-green-400/20 to-blue-500/20 rounded-3xl blur-xl -z-10"></div>
+          </div>
+        </div>
 
-            {/* Podcast Info */}
-            <div className="text-center mb-8">
-              <h1 className="text-xl font-medium text-gray-800 mb-2 leading-7">
-                {podcast.title}
-              </h1>
-              <p className="text-base text-gray-600 mb-1">
-                {podcast.podcast}
-              </p>
-              <p className="text-sm text-gray-500">
-                {podcast.episode}
-              </p>
-            </div>
+        {/* Track Info */}
+        <div className="text-center px-8 mb-8">
+          <h2 className="text-2xl font-bold text-white mb-2 leading-tight">
+            {podcastTitle}
+          </h2>
+          <p className="text-lg text-gray-400">
+            {podcast.podcast || "AI Generated"}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">
+            {podcast.episode || "Generated Content"}
+          </p>
+        </div>
 
-            {/* Progress Bar */}
-            <div className="mb-8">
-              <div className="flex justify-between text-sm text-gray-500 mb-2">
-                <span>{podcast.currentTime}</span>
-                <span>{podcast.duration}</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-1">
-                <div 
-                  className="bg-gray-800 h-1 rounded-full transition-all duration-300" 
-                  style={{ width: `${podcast.progress}%` }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Control Buttons */}
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <Button variant="ghost" size="icon" className="w-9 h-11">
-                <SkipBackIcon className="w-3 h-5 text-gray-600" />
-              </Button>
-              
-              <Button variant="ghost" size="icon" className="w-[42px] h-[42px]">
-                <SkipBackIcon className="w-[18px] h-[18px] text-gray-600 rotate-180" />
-              </Button>
-              
-              <Button 
-                onClick={handlePlayPause}
-                className="w-12 h-14 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center"
+        {/* Progress Bar */}
+        <div className="px-8 mb-8">
+          <div className="relative">
+            <div className="w-full h-2 bg-gray-800 rounded-full">
+              <div 
+                className="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full relative"
+                style={{ width: `${podcast.progress || 0}%` }}
               >
-                {isPlaying ? (
-                  <PauseIcon className="w-4 h-6 text-white" />
-                ) : (
-                  <PlayIcon className="w-4 h-6 text-white ml-1" />
-                )}
-              </Button>
-              
-              <Button variant="ghost" size="icon" className="w-[42px] h-[42px]">
-                <SkipForwardIcon className="w-[18px] h-[18px] text-gray-600" />
-              </Button>
-              
-              <Button variant="ghost" size="icon" className="w-9 h-11">
-                <SkipForwardIcon className="w-3 h-5 text-gray-600" />
-              </Button>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex items-center justify-between mb-6">
-              <Button variant="ghost" className="flex items-center gap-2 text-gray-600 hover:text-gray-800">
-                <ListIcon className="w-4 h-4" />
-                <span className="text-sm">Episodes</span>
-              </Button>
-              
-              <div className="flex items-center gap-3">
-                <Button variant="ghost" size="icon" className="w-8 h-8">
-                  <HeartIcon className="w-4 h-4 text-gray-600" />
-                </Button>
-                <Button variant="ghost" size="icon" className="w-8 h-8">
-                  <ShareIcon className="w-4 h-4 text-gray-600" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Volume Control */}
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="w-[14px] h-4"
-                onClick={handleVolumeToggle}
-              >
-                {isMuted ? (
-                  <VolumeXIcon className="w-[14px] h-4 text-gray-600" />
-                ) : (
-                  <Volume2Icon className="w-[14px] h-4 text-gray-600" />
-                )}
-              </Button>
-              
-              <div className="flex-1 bg-gray-200 rounded-full h-1 relative">
-                <div 
-                  className="bg-gray-800 h-1 rounded-full transition-all duration-300" 
-                  style={{ width: isMuted ? '0%' : `${volume}%` }}
-                ></div>
-              </div>
-              
-              <Button variant="ghost" size="icon" className="w-5 h-4">
-                <Volume2Icon className="w-5 h-4 text-gray-600" />
-              </Button>
-            </div>
-          </main>
-
-          {/* Mini Player Bar */}
-          <div className="bg-white px-4 py-4 border-t border-gray-100">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gray-300 rounded-lg flex items-center justify-center">
-                <span className="text-white text-xs font-medium">Art</span>
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-800">Currently Playing</p>
-                <p className="text-xs text-gray-500">Tech Podcast</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" className="w-[10px] h-4">
-                  <SkipBackIcon className="w-[10px] h-4 text-gray-600 rotate-180" />
-                </Button>
-                <Button variant="ghost" size="icon" className="w-[10px] h-4">
-                  <SkipForwardIcon className="w-[10px] h-4 text-gray-600" />
-                </Button>
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg"></div>
               </div>
             </div>
           </div>
+          <div className="flex justify-between text-sm text-gray-400 mt-2">
+            <span>{podcast.currentTime || "0:00"}</span>
+            <span>{podcast.duration || "0:00"}</span>
+          </div>
         </div>
+
+        {/* Controls */}
+        <div className="flex items-center justify-center space-x-8 px-8 mb-8">
+          <button className="p-3 rounded-full hover:bg-gray-800/50 transition-colors">
+            <SkipBackIcon className="w-6 h-6 text-gray-300" />
+          </button>
+          
+          <button
+            onClick={handlePlayPause}
+            className="w-20 h-20 rounded-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 flex items-center justify-center shadow-lg shadow-green-500/25 transition-all duration-200 transform hover:scale-105"
+          >
+            {isPlaying ? (
+              <PauseIcon className="w-8 h-8 text-black ml-1" />
+            ) : (
+              <PlayIcon className="w-8 h-8 text-black ml-1" />
+            )}
+          </button>
+          
+          <button className="p-3 rounded-full hover:bg-gray-800/50 transition-colors">
+            <SkipForwardIcon className="w-6 h-6 text-gray-300" />
+          </button>
+        </div>
+
+        {/* Additional Controls */}
+        <div className="flex items-center justify-between px-8 mb-8">
+          <button className="p-3 rounded-full hover:bg-gray-800/50 transition-colors">
+            <HeartIcon className="w-5 h-5 text-gray-400" />
+          </button>
+          
+          <button className="p-3 rounded-full hover:bg-gray-800/50 transition-colors">
+            <ShareIcon className="w-5 h-5 text-gray-400" />
+          </button>
+          
+          <div className="flex items-center space-x-2">
+            <button onClick={handleVolumeToggle} className="p-2 rounded-full hover:bg-gray-800/50 transition-colors">
+              {isMuted ? (
+                <VolumeXIcon className="w-5 h-5 text-gray-400" />
+              ) : (
+                <Volume2Icon className="w-5 h-5 text-gray-400" />
+              )}
+            </button>
+          </div>
+          
+          <button className="p-3 rounded-full hover:bg-gray-800/50 transition-colors">
+            <ListIcon className="w-5 h-5 text-gray-400" />
+          </button>
+        </div>
+
+        {/* Up Next */}
+        <div className="px-8 pb-8">
+          <div className="bg-gray-800/30 backdrop-blur-lg rounded-2xl p-4 border border-gray-700/50">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-white font-semibold">Playing Next</h3>
+              <MoreHorizontalIcon className="w-5 h-5 text-gray-400" />
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-400 to-pink-500"></div>
+              <div className="flex-1">
+                <p className="text-white text-sm font-medium">More AI Podcasts</p>
+                <p className="text-gray-400 text-xs">Neptunize</p>
+              </div>
+              <PlayIcon className="w-5 h-5 text-gray-400" />
+            </div>
+          </div>
+        </div>
+
+        {/* Audio element */}
+        {audioUrl && (
+          <audio
+            controls
+            className="hidden"
+            src={audioUrl}
+            autoPlay={isPlaying}
+          />
+        )}
       </div>
     </div>
   );
