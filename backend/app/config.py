@@ -13,19 +13,19 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
-    # API Keys
-    openai_api_key: str = Field(..., env="OPENAI_API_KEY")
-    elevenlabs_api_key: str = Field(..., env="ELEVENLABS_API_KEY")
+    # API Keys - with fallbacks for development
+    openai_api_key: str = Field("sk-test-key", env="OPENAI_API_KEY")
+    elevenlabs_api_key: str = Field("test-key", env="ELEVENLABS_API_KEY")
     
-    # Database
-    database_url: str = Field(..., env="DATABASE_URL")
+    # Database - with fallback for development
+    database_url: str = Field("sqlite:///./test.db", env="DATABASE_URL")
     database_url_test: Optional[str] = Field(None, env="DATABASE_URL_TEST")
     
     # Redis
     redis_url: str = Field("redis://localhost:6379/0", env="REDIS_URL")
     
-    # Security
-    secret_key: str = Field(..., env="SECRET_KEY")
+    # Security - with fallback for development
+    secret_key: str = Field("development-secret-key-change-in-production", env="SECRET_KEY")
     algorithm: str = Field("HS256", env="ALGORITHM")
     access_token_expire_minutes: int = Field(30, env="ACCESS_TOKEN_EXPIRE_MINUTES")
     
