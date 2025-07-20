@@ -1,5 +1,16 @@
 // API service for frontend-backend communication
-export const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'https://neptunize-production.up.railway.app';
+
+// Get API URL from environment variables with fallback
+const getApiUrl = () => {
+  // For development
+  if (import.meta.env.DEV) {
+    return import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  }
+  // For production
+  return import.meta.env.VITE_API_URL || 'https://neptunize-production.up.railway.app';
+};
+
+export const API_BASE_URL = getApiUrl();
 
 export interface ChatMessage {
   content: string;
