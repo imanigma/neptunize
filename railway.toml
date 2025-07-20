@@ -5,7 +5,7 @@ builder = "nixpacks"
 healthcheckPath = "/health.json"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
-startCommand = "node_modules/.bin/serve dist -s -p $PORT"
+startCommand = "node server.js"
 
 [env]
 NODE_ENV = "production"

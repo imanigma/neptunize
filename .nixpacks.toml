@@ -9,7 +9,7 @@ cmds = ["npm ci"]
 cmds = ["npm run build"]
 
 [start]
-cmd = "node_modules/.bin/serve dist -s -p $PORT"
+cmd = "node server.js"
 
 [start]
 cmd = "serve dist -s -p $PORT"

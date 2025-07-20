@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build && node -e \"const fs=require('fs'); fs.writeFileSync('dist/health.json', JSON.stringify({status:'healthy',service:'neptunize-frontend',timestamp:new Date().toISOString()}))\"",
     "build:railway": "vite build && node -e \"const fs=require('fs'); fs.writeFileSync('dist/health.json', JSON.stringify({status:'healthy',service:'neptunize-frontend',timestamp:new Date().toISOString()}))\"",
-    "start": "node_modules/.bin/serve dist -s -p 8080",
+    "start": "node server.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "2.1.1",
+    "express": "^4.18.2",
     "lucide-react": "^0.453.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
