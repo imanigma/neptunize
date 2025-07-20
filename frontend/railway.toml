@@ -1,8 +1,9 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 healthcheckPath = "/"
 restartPolicyType = "on_failure"
 
-# Force rebuild - updated for path resolution fix
+# Force rebuild - switched to Docker for better build consistency
