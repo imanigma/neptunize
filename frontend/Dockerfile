@@ -1,13 +1,13 @@
-# Frontend Dockerfile for Vite React App
-FROM node:18-alpine as builder
+# Use Node.js 18 Alpine for smaller image size
+FROM node:18-alpine AS builder
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 
-# Install dependencies including devDependencies for build
+# Install dependencies
 RUN npm ci
 
 # Copy source code
@@ -16,30 +16,14 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage
-FROM nginx:1.27.2-alpine
+# Production stage with nginx
+FROM nginx:alpine
 
-# Copy built assets from builder stage
+# Copy built files to nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Security configurations
-RUN echo 'server_tokens off;' > /etc/nginx/conf.d/security.conf && \
-    echo 'add_header X-Frame-Options DENY always; \
-    add_header X-Content-Type-Options nosniff always; \
-    add_header X-XSS-Protection "1; mode=block" always; \
-    add_header Referrer-Policy "strict-origin-when-cross-origin" always; \
-    add_header Content-Security-Policy "default-src '\''self'\''; connect-src '\''self'\'' http://backend:8000 http://localhost:8000; script-src '\''self'\'' '\''unsafe-inline'\''; style-src '\''self'\'' '\''unsafe-inline'\''; img-src '\''self'\'' data:;" always;' \
-    >> /etc/nginx/conf.d/security.conf && \
-    adduser -D appuser && \
-    chown -R appuser /var/cache/nginx && \
-    chown -R appuser /var/log/nginx && \
-    chown -R appuser /etc/nginx
-
-USER appuser
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD curl -f http://localhost/ || exit 1
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80

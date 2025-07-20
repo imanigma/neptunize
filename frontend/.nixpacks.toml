@@ -1,0 +1,12 @@
+[variables]
+NPM_CONFIG_LOGLEVEL = "error"
+NODE_ENV = "production"
+
+[phases.setup]
+cmds = ["npm ci --only=production=false"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npx serve dist -s -p 8080"
