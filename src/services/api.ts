@@ -1,13 +1,19 @@
 // API service for frontend-backend communication
 
-// Get API URL from environment variables with fallback
+// Get API URL from environment variables
 const getApiUrl = () => {
-  // For development
+  // In development, default to localhost if the env var isn't set.
   if (import.meta.env.DEV) {
     return import.meta.env.VITE_API_URL || 'http://localhost:8000';
   }
-  // For production
-  return import.meta.env.VITE_API_URL || 'https://neptunize-production.up.railway.app';
+  
+  // In production, the environment variable is required.
+  // The hardcoded fallback has been removed to prevent deployment errors.
+  if (!import.meta.env.VITE_API_URL) {
+    console.error("FATAL: The VITE_API_URL environment variable is not set. The application cannot connect to the backend.");
+  }
+
+  return import.meta.env.VITE_API_URL;
 };
 
 export const API_BASE_URL = getApiUrl();
