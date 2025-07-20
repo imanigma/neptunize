@@ -1,9 +1,43 @@
-# Root .gitignore for Neptunize Repository
+# Frontend specific .gitignore
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+dist/
+build/
 
 # Environment variables
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # OS generated files
 .DS_Store
@@ -14,48 +48,23 @@
 ehthumbs.db
 Thumbs.db
 
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# PWA generated files (keep in repo)
+# sw.js
+# manifest.json
 
-# Logs and runtime data
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Database files (should be in backend/)
-*.db
-*.sqlite
-*.sqlite3
-
-# Generated audio files (should be in backend/generated_audio/)
-generated_audio/
-
-# Python virtual environments
-venv/
-env/
-ENV/
-
-# Temporary files
+# Temporary folders
 tmp/
 temp/
-.tmp/
 
-# Build artifacts (will be generated in subdirectories)
-dist/
-build/
+# Build artifacts
+*.tsbuildinfo
 
-# Docker
-.dockerignore
-
-# Railway
-.railway/
-
-# Backup files
-*.bak
-*.backup
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
