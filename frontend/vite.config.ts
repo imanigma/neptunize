@@ -2,9 +2,15 @@ import react from "@vitejs/plugin-react";
 import tailwind from "tailwindcss";
 import { defineConfig } from "vite";
 import { VitePWA } from 'vite-plugin-pwa';
+import * as path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(process.cwd(), './src')
+    }
+  },
   plugins: [
     react(),
     VitePWA({
