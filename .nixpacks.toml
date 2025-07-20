@@ -5,7 +5,7 @@ NODE_ENV = "production"
 [phases.setup]
 cmds = ["npm ci"]
 
-[phases.build]
+[phases.build]  
 cmds = ["npm run build"]
 
 [start]

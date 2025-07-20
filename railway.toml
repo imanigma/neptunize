@@ -3,8 +3,11 @@ builder = "nixpacks"
 
 [deploy]
 healthcheckPath = "/health.json"
-healthcheckTimeout = 30
+healthcheckTimeout = 300
 restartPolicyType = "on_failure"
 startCommand = "node_modules/.bin/serve dist -s -p $PORT"
 
-# Using Nixpacks with serve package for better Railway compatibility
+[env]
+NODE_ENV = "production"
+
+# Optimized for Railway frontend deployment
