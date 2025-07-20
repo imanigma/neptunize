@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Frame } from "./screens/Frame";
+import './index.css';
 
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
