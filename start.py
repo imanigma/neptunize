@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 import os
 import sys
-import subprocess
 
 # Add the backend directory to Python path
 sys.path.insert(0, 'backend')
 
-# Change to backend directory and start the app
+# Change to backend directory
 os.chdir('backend')
-subprocess.run([sys.executable, '-m', 'uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', os.environ.get('PORT', '8000')])
+
+# Get port from environment variable (Railway sets this)
+port = os.environ.get('PORT', '8000')
+
+# Start the FastAPI app
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=int(port))
