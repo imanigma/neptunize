@@ -1,0 +1,2 @@
+# Force Railway to ignore nixpacks cache
+.nixpacks/
