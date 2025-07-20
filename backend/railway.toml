@@ -1,6 +1,5 @@
 [build]
-builder = "dockerfile"
-dockerfilePath = "Dockerfile"
+builder = "nixpacks"
 
 [deploy]
 healthcheckPath = "/health"
@@ -10,3 +9,5 @@ startCommand = "python run.py"
 
 [env]
 PORT = "8000"
+
+# Using Nixpacks for simpler deployment
