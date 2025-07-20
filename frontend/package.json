@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build && node -e \"const fs=require('fs'); fs.writeFileSync('dist/health.json', JSON.stringify({status:'healthy',service:'neptunize-frontend',timestamp:new Date().toISOString()}))\"",
     "build:railway": "vite build && node -e \"const fs=require('fs'); fs.writeFileSync('dist/health.json', JSON.stringify({status:'healthy',service:'neptunize-frontend',timestamp:new Date().toISOString()}))\"",
-    "start": "npx serve dist -s -p 8080",
+    "start": "node_modules/.bin/serve dist -s -p 8080",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -9,7 +9,7 @@ cmds = ["npm ci"]
 cmds = ["npm run build"]
 
 [start]
-cmd = "npx serve dist -s -p $PORT"
+cmd = "node_modules/.bin/serve dist -s -p $PORT"
 
 [start]
 cmd = "serve dist -s -p $PORT"
