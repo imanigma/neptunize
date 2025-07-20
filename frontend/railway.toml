@@ -4,3 +4,5 @@ builder = "nixpacks"
 [deploy]
 healthcheckPath = "/"
 restartPolicyType = "on_failure"
+
+# Force rebuild - updated for path resolution fix
