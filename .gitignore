@@ -122,38 +122,31 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Project specific
+# --- Project Specific ---
+# Ignore generated audio files and logs
 generated_audio/
 logs/
 *.mp3
 *.wav
-.DS_Store
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Database
+# Ignore SQLite databases
 *.db
-*.sqlite
+*.sqlite*
 
-# Alembic
+# Ignore Alembic auto-generated migration files (good practice for teams)
 backend/alembic/versions/*.py
 !backend/alembic/versions/__init__.py
 
-# Node.js / Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/.env.local
-frontend/.env.production
-*.log
+# --- IDE & OS Specific ---
+# Ignore IDE settings folders
+.vscode/
+.idea/
 
-# Docker
-.dockerignore
+# Ignore IDE state/swap files
+*.swp
+*.swo
 
-# OS generated files
+# Ignore common OS-generated files
 .DS_Store
 .DS_Store?
 ._*

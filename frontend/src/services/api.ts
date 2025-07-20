@@ -1,5 +1,5 @@
 // API service for frontend-backend communication
-export const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'https://neptunize-production.up.railway.app';
+export const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'https://neptunize-backend-production.up.railway.app';
 
 export interface ChatMessage {
   content: string;
