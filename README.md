@@ -1,93 +1,152 @@
-# Neptunize - AI Podcast Generator
+# Backend - Neptunize API
 
-A full-stack application for AI-powered podcast generation using OpenAI and ElevenLabs APIs.
+FastAPI-based backend for AI-powered podcast generation using OpenAI and ElevenLabs APIs.
 
-## Architecture
+## Features
 
-- **Frontend**: React + Vite + TypeScript PWA with dark theme
-- **Backend**: FastAPI + SQLAlchemy + PostgreSQL
-- **AI Services**: OpenAI for script enhancement, ElevenLabs for TTS
+- 🔌 RESTful API with automatic documentation
+- 🤖 OpenAI integration for script enhancement
+- 🔊 ElevenLabs integration for text-to-speech
+- 🗄️ SQLAlchemy ORM with database migrations
+- 🔐 JWT authentication
+- 📊 Usage tracking and analytics
+- 🏥 Health checks and monitoring
+- 📝 Structured logging
 
 ## Quick Start
 
-### Using Docker Compose (Recommended)
+### Local Development
+
+1. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Setup Environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys
+   ```
+
+3. **Run the Application**
+   ```bash
+   python run.py
+   ```
+
+### Using Docker
 
 ```bash
-# Clone the repository
-git clone https://github.com/imanigma/neptunize.git
-cd neptunize
-
-# Start both services
-docker-compose up --build
+# Build and run
+docker build -t neptunize-backend .
+docker run -p 8000:8000 --env-file .env neptunize-backend
 ```
 
-The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
+## API Documentation
 
-### Development Setup
+Once running, visit:
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+- **Health Check**: http://localhost:8000/health
 
-#### Backend Development
+## Configuration
+
+### Environment Variables
+
 ```bash
-cd backend
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env with your API keys
-python run.py
-```
-
-#### Frontend Development
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Environment Variables
-
-### Backend (.env in backend folder)
-```
+# Required
 OPENAI_API_KEY=your_openai_key
 ELEVENLABS_API_KEY=your_elevenlabs_key
+
+# Optional
 DATABASE_URL=sqlite:///./neptunize.db
 SECRET_KEY=your_secret_key
+DEBUG=false
+LOG_LEVEL=info
+FRONTEND_URL=http://localhost:3000
 ```
 
-### Frontend (.env in frontend folder)
+### Database
+
+The application uses SQLAlchemy with Alembic for migrations:
+
+```bash
+# Run migrations
+alembic upgrade head
+
+# Create new migration
+alembic revision --autogenerate -m "description"
 ```
-VITE_API_URL=http://localhost:8000
+
+## Project Structure
+
 ```
+backend/
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI application
+│   ├── config.py            # Configuration settings
+│   ├── models.py            # Database models
+│   ├── schemas.py           # Pydantic schemas
+│   ├── database.py          # Database connection
+│   ├── auth/                # Authentication modules
+│   ├── routers/             # API route handlers
+│   └── services/            # Business logic
+├── alembic/                 # Database migrations
+├── generated_audio/         # Audio file storage
+├── logs/                    # Application logs
+├── requirements.txt         # Python dependencies
+├── Dockerfile              # Container configuration
+├── railway.toml            # Railway deployment config
+└── run.py                  # Application entry point
+```
+
+## API Endpoints
+
+### Authentication
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
+- `POST /auth/refresh` - Refresh JWT token
+
+### Podcast Generation
+- `POST /podcasts/generate` - Generate podcast
+- `GET /podcasts/` - List user podcasts
+- `GET /podcasts/{id}` - Get specific podcast
+- `DELETE /podcasts/{id}` - Delete podcast
+
+### Utilities
+- `GET /health` - Health check
+- `GET /` - Root endpoint
 
 ## Deployment
 
 ### Railway
-Each service has its own `railway.toml` configuration for separate deployments.
 
-### Docker
-Each service has its own optimized Dockerfile for production deployment.
+The backend is configured for Railway deployment with automatic builds from the `deployment` branch.
 
-## Features
+### Environment Setup
 
-- 🎙️ AI-powered podcast script generation
-- 🔊 High-quality text-to-speech conversion
-- 📱 PWA with offline capabilities
-- 🌙 Dark theme UI
-- 📊 Usage tracking and analytics
-- 🔐 JWT authentication
-- 🎨 Mobile-responsive design
+Make sure to set these environment variables in your deployment platform:
+- `OPENAI_API_KEY`
+- `ELEVENLABS_API_KEY`
+- `SECRET_KEY`
+- `DATABASE_URL` (if using external database)
 
-## Tech Stack
+## Development
 
-### Frontend
-- React 18 + TypeScript
-- Vite + PWA plugin
-- Tailwind CSS + shadcn/ui
-- React Router + Lucide Icons
+### Adding New Features
 
-### Backend
-- FastAPI + Uvicorn
-- SQLAlchemy + Alembic
-- OpenAI GPT models
-- ElevenLabs TTS API
-- JWT authentication
+1. Create models in `app/models.py`
+2. Create schemas in `app/schemas.py`  
+3. Add routes in `app/routers/`
+4. Implement business logic in `app/services/`
+5. Create database migrations with Alembic
+
+### Testing
+
+```bash
+# Run tests
+python -m pytest
+
+# Run specific test
+python test_backend.py
+```
