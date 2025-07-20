@@ -6,7 +6,10 @@ NODE_ENV = "production"
 cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["npm run build", "echo '{\"status\":\"healthy\"}' > dist/health.json"]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npx serve dist -s -p $PORT"
 
 [start]
 cmd = "serve dist -s -p $PORT"
