@@ -16,8 +16,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Create health check file
-RUN echo '{"status":"healthy","service":"neptunize-frontend","timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > dist/health.json
+# Create health check file using Node.js for cross-platform compatibility
+RUN node -e "const fs=require('fs'); fs.writeFileSync('dist/health.json', JSON.stringify({status:'healthy',service:'neptunize-frontend',timestamp:new Date().toISOString()}))"
 
 # Production stage with nginx
 FROM nginx:alpine
