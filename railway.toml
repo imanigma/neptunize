@@ -2,4 +2,5 @@
 builder = "dockerfile"
 
 [deploy]
-healthcheckPath = "/health"
+# Temporarily disable healthcheck to debug
+# healthcheckPath = "/health"
