@@ -16,6 +16,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
+# Create health check file
+RUN echo '{"status":"healthy","service":"neptunize-frontend","timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > dist/health.json
+
 # Production stage with nginx
 FROM nginx:alpine
 
@@ -31,9 +34,9 @@ RUN rm -f /etc/nginx/conf.d/default.conf.bak
 # Expose port 80
 EXPOSE 80
 
-# Health check - simplified for Railway
+# Health check - check for health.json endpoint
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:80/health.json || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
