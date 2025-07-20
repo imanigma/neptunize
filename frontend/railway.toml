@@ -2,7 +2,8 @@
 builder = "nixpacks"
 
 [deploy]
-healthcheckPath = "/"
+healthcheckPath = "/health.json"
+healthcheckTimeout = 30
 restartPolicyType = "on_failure"
 
-# Try nixpacks again - Docker might be too resource intensive
+# Using Nixpacks with serve package for better Railway compatibility
