@@ -2,8 +2,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AuthModal } from "@/components/AuthModal";
 
-export const Landing = () => {
+interface LandingProps {
+  onLoginSuccess: () => void;
+}
+
+export const Landing = ({ onLoginSuccess }: LandingProps) => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+
+  const handleAuthSuccess = () => {
+    setAuthModalOpen(false); // Close modal on success
+    onLoginSuccess();      // Notify parent component
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
@@ -60,7 +69,11 @@ export const Landing = () => {
         <p>&copy; 2025 Neptunize. All rights reserved.</p>
       </footer>
 
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setAuthModalOpen(false)} />
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
+        onAuthSuccess={handleAuthSuccess} 
+      />
     </div>
   );
 };

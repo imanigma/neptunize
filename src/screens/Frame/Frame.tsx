@@ -10,6 +10,7 @@ import { PodcastPlayer } from "../PodcastPlayer";
 import { Auth } from "../../components/Auth";
 import { InstallPrompt } from "../../components/InstallPrompt";
 import { apiService, PodcastResponse } from "../../services/api";
+import { Landing } from "../Landing";
 
 // Define proper interfaces
 interface Message {
@@ -85,9 +86,18 @@ export const Frame = (): JSX.Element => {
     }
   };
 
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    apiService.logout();
+    setIsAuthenticated(false);
+  };
+
   // Show authentication screen if not logged in
   if (!isAuthenticated) {
-    return <Auth onAuthSuccess={handleAuthSuccess} />;
+    return <Landing onLoginSuccess={handleLoginSuccess} />;
   }
 
   // Show Home screen if selected
